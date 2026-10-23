@@ -35,3 +35,5 @@ Each step skips when its target already holds the version, so rerunning is safe.
 - MCP Registry: the repository needs the `MCP_DNS_PRIVATE_KEY` secret for the `getmcpads.com` domain.
 
 The README install commands select a tag from the GitHub source. The npm package and the MCP Registry entry come from the same workflow run, after the tag exists.
+
+Before tagging, add the release to CHANGELOG.md as `## X.Y.Z - YYYY-MM-DD - Title`, then run `npm run release-history`. The README shows every release from the changelog, and the test suite fails when it falls behind.
