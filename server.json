@@ -1,0 +1,79 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.getmcpads/linkedin-ads",
+  "title": "LinkedIn Ads",
+  "description": "LinkedIn Ads MCP server: 18 read tools, 15 opt-in preview-first writes.",
+  "version": "1.0.0",
+  "websiteUrl": "https://www.getmcpads.com/tools/linkedin-ads",
+  "repository": {
+    "url": "https://github.com/get-mcp-ads/linkedin-ads-mcp-server",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@getmcpads/linkedin-ads-mcp-server",
+      "version": "1.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "LINKEDIN_ADS_ACCESS_TOKEN",
+          "description": "Member access token from your own LinkedIn app, with r_ads and r_ads_reporting. Keep it secret.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "LINKEDIN_ADS_REFRESH_TOKEN",
+          "description": "Programmatic refresh token. With the client ID and secret, the token is renewed in memory.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "LINKEDIN_ADS_CLIENT_ID",
+          "description": "Client ID of your LinkedIn app, needed for refresh.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "LINKEDIN_ADS_CLIENT_SECRET",
+          "description": "Client secret of your LinkedIn app, needed for refresh.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "LINKEDIN_ADS_ACCOUNT_IDS",
+          "description": "Comma-separated numeric ad account IDs this server may access, 1 to 100. Required even for reads.",
+          "isRequired": true,
+          "isSecret": false
+        },
+        {
+          "name": "LINKEDIN_ADS_SCOPES",
+          "description": "Scopes actually granted to the token. When set, writes require rw_ads.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "LINKEDIN_ADS_ENABLE_WRITES",
+          "description": "true exposes the 15 write tools. Defaults to false.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "LINKEDIN_ADS_API_VERSION",
+          "description": "LinkedIn-Version header as YYYYMM. Defaults to 202608.",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "LINKEDIN_ADS_LOG_LEVEL",
+          "description": "debug, info, warn or error. Logs go to stderr. Defaults to info.",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

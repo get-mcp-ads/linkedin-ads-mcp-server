@@ -1,0 +1,3487 @@
+{
+  "serverInfo": {
+    "name": "@getmcpads/linkedin-ads-mcp-server",
+    "title": "LinkedIn Ads MCP server: 18 read tools, 15 opt-in preview-first writes.",
+    "version": "1.0.0",
+    "websiteUrl": "https://www.getmcpads.com/tools/linkedin-ads",
+    "icons": [
+      {
+        "src": "https://mcp.getmcpads.com/icon.svg",
+        "mimeType": "image/svg+xml"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "name": "linkedin_health_check",
+      "title": "linkedin health check",
+      "description": "Read-only LinkedIn Ads health check. Confirms the token works, lists which configured ad accounts it can reach, checks the reporting endpoint and reports the API version header in use, without ever returning the token itself.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Optional configured account to probe for reporting access. Defaults to the first reachable one."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_list_ad_accounts",
+      "title": "linkedin list ad accounts",
+      "description": "List the LinkedIn sponsored ad accounts configured in LINKEDIN_ADS_ACCOUNT_IDS that the authenticated member can reach, with currency, status and serving status. Accounts outside the configured list are never returned. Test accounts are excluded unless asked for.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Configured account IDs to list. Defaults to every configured account."
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "DRAFT",
+                "CANCELED",
+                "PENDING_DELETION",
+                "REMOVED"
+              ]
+            },
+            "description": "Keep only accounts in these native statuses."
+          },
+          "includeTestAccounts": {
+            "type": "boolean",
+            "description": "Test accounts never serve and never report. Off by default."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_account_details",
+      "title": "linkedin get account details",
+      "description": "Read one LinkedIn ad account in full, with the members who hold a role on it. Roles decide what the connection can do, so a read that fails on one account and works on another is usually a role, not a scope.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "includeUsers": {
+            "type": "boolean",
+            "description": "Also list the account users and their roles. On by default."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_campaign_groups",
+      "title": "linkedin get campaign groups",
+      "description": "List campaign groups in a LinkedIn ad account, with budget, schedule and serving status. On LinkedIn the campaign group is where a shared budget and a bid strategy live, so it is the level that explains why sibling campaigns stopped together.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PAUSED",
+                "ARCHIVED",
+                "CANCELED",
+                "DRAFT",
+                "PENDING_DELETION",
+                "REMOVED"
+              ]
+            },
+            "description": "Keep only campaign groups in these native statuses."
+          },
+          "name": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "maxItems": 50,
+            "description": "Exact campaign group names to match."
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Maximum items in this page, 1 to 100. Defaults to 100."
+          },
+          "pageToken": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_campaigns",
+      "title": "linkedin get campaigns",
+      "description": "List campaigns in a LinkedIn ad account with status, objective, format, bid strategy, budget and schedule. On LinkedIn the campaign holds the targeting and the bid, and the creatives under it are the ads.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PAUSED",
+                "ARCHIVED",
+                "COMPLETED",
+                "CANCELED",
+                "DRAFT",
+                "PENDING_DELETION",
+                "REMOVED"
+              ]
+            },
+            "description": "Keep only campaigns in these native statuses."
+          },
+          "type": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "TEXT_AD",
+                "SPONSORED_UPDATES",
+                "SPONSORED_INMAILS",
+                "DYNAMIC"
+              ]
+            },
+            "description": "Keep only these campaign formats, such as TEXT_AD or SPONSORED_UPDATES."
+          },
+          "name": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "maxItems": 50,
+            "description": "Exact campaign names to match."
+          },
+          "campaignGroupId": {
+            "type": "string",
+            "pattern": "^(urn:li:sponsoredCampaignGroup:)?\\d+$",
+            "description": "Keep only campaigns in this campaign group of the selected account."
+          },
+          "includeTargeting": {
+            "type": "boolean",
+            "description": "Return the raw targetingCriteria object. Off by default because it is verbose."
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Maximum items in this page, 1 to 100. Defaults to 100."
+          },
+          "pageToken": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_creatives",
+      "title": "linkedin get creatives",
+      "description": "List the creatives of a LinkedIn ad account, optionally for given campaigns. A creative is the ad itself, and it carries its own intended status, its review verdict and the reasons it is being held back.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Sponsored campaign IDs or URNs in the selected account."
+          },
+          "intendedStatuses": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PAUSED",
+                "DRAFT",
+                "ARCHIVED",
+                "CANCELED",
+                "PENDING_DELETION",
+                "REMOVED"
+              ]
+            },
+            "description": "Filter by native configured ad statuses, not effective delivery status."
+          },
+          "includeContent": {
+            "type": "boolean",
+            "description": "Return the raw content object of each creative. Off by default."
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Maximum items in this page, 1 to 100. Defaults to 100."
+          },
+          "pageToken": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_insights",
+      "title": "linkedin get insights",
+      "description": "Run a LinkedIn Ads report grouped by one pivot. This is the analytics finder: one pivot, any granularity, and up to 20 fields including dateRange and pivotValues. Ratios such as CTR, CPC and CPM do not exist in the API and are computed here from the raw terms.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+          },
+          "campaignGroupIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these owned campaign-group IDs."
+          },
+          "creativeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these owned creative IDs."
+          },
+          "pivot": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Grouping. Defaults to CAMPAIGN. One of: ACCOUNT, CAMPAIGN_GROUP, CAMPAIGN, CREATIVE, COMPANY, SHARE, CONVERSION, MEMBER_COMPANY, MEMBER_COMPANY_SIZE, MEMBER_INDUSTRY, MEMBER_SENIORITY, MEMBER_JOB_TITLE, MEMBER_JOB_FUNCTION, MEMBER_COUNTRY_V2, MEMBER_REGION_V2, MEMBER_COUNTY, SERVING_LOCATION, PLACEMENT_NAME, IMPRESSION_DEVICE_TYPE, EVENT_STAGE, CARD_INDEX, CONVERSATION_NODE, CONVERSATION_NODE_OPTION_INDEX."
+          },
+          "startDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+          },
+          "timeGranularity": {
+            "type": "string",
+            "enum": [
+              "ALL",
+              "DAILY",
+              "MONTHLY",
+              "YEARLY"
+            ],
+            "description": "Defaults to ALL, one row for the whole range."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 60
+            },
+            "maxItems": 40,
+            "description": "Metric keys from linkedin://metrics. Defaults to spend, impressions, clicks and the ratios."
+          },
+          "campaignType": {
+            "type": "string",
+            "enum": [
+              "TEXT_AD",
+              "SPONSORED_UPDATES",
+              "SPONSORED_INMAILS",
+              "DYNAMIC"
+            ],
+            "description": "Native campaign format filter."
+          },
+          "sortField": {
+            "type": "string",
+            "enum": [
+              "COST_IN_LOCAL_CURRENCY",
+              "IMPRESSIONS",
+              "CLICKS",
+              "ONE_CLICK_LEADS",
+              "OPENS",
+              "SENDS",
+              "EXTERNAL_WEBSITE_CONVERSIONS"
+            ],
+            "description": "Native field used to order the returned rows."
+          },
+          "sortOrder": {
+            "type": "string",
+            "enum": [
+              "ASCENDING",
+              "DESCENDING"
+            ],
+            "description": "Ascending or descending native result ordering."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "startDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_run_statistics_report",
+      "title": "linkedin run statistics report",
+      "description": "Run a LinkedIn Ads report grouped by up to three pivots at once. This is the statistics finder, the only way to cross campaign with device, or campaign group with serving location, in a single request.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+          },
+          "campaignGroupIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these owned campaign-group IDs."
+          },
+          "creativeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these owned creative IDs."
+          },
+          "pivots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "One to three pivots. Order decides the order of pivotValues."
+          },
+          "startDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+          },
+          "timeGranularity": {
+            "type": "string",
+            "enum": [
+              "ALL",
+              "DAILY",
+              "MONTHLY",
+              "YEARLY"
+            ],
+            "description": "Native reporting aggregation interval. Defaults to ALL."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 60
+            },
+            "maxItems": 40,
+            "description": "Metric keys from linkedin://metrics. Defaults to spend, impressions, clicks and the ratios."
+          },
+          "campaignType": {
+            "type": "string",
+            "enum": [
+              "TEXT_AD",
+              "SPONSORED_UPDATES",
+              "SPONSORED_INMAILS",
+              "DYNAMIC"
+            ],
+            "description": "Native campaign format filter."
+          },
+          "objectiveType": {
+            "type": "string",
+            "enum": [
+              "LEAD_GENERATION",
+              "CREATIVE_ENGAGEMENT",
+              "WEBSITE_TRAFFIC",
+              "VIDEO_VIEW",
+              "BRAND_AWARENESS",
+              "WEBSITE_CONVERSION",
+              "WEBSITE_VISIT",
+              "ENGAGEMENT",
+              "JOB_APPLICANT"
+            ],
+            "description": "Native campaign objective filter."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "pivots",
+          "startDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_demographics",
+      "title": "linkedin get demographics",
+      "description": "Break LinkedIn delivery down by professional demographics: company, company size, industry, seniority, job title, job function or location. These are the numbers LinkedIn is bought for, and they come with limits the tool states alongside the rows.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+          },
+          "campaignGroupIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these owned campaign-group IDs."
+          },
+          "breakdown": {
+            "type": "string",
+            "enum": [
+              "MEMBER_COMPANY",
+              "MEMBER_COMPANY_SIZE",
+              "MEMBER_INDUSTRY",
+              "MEMBER_SENIORITY",
+              "MEMBER_JOB_TITLE",
+              "MEMBER_JOB_FUNCTION",
+              "MEMBER_COUNTRY_V2",
+              "MEMBER_REGION_V2",
+              "MEMBER_COUNTY"
+            ],
+            "description": "Which professional demographic to group by."
+          },
+          "startDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 60
+            },
+            "maxItems": 40,
+            "description": "Defaults to spend, impressions, clicks and CTR. Conversion value, carousel and reach fields are not available here."
+          },
+          "resolveNames": {
+            "type": "boolean",
+            "description": "Resolve the returned URNs to readable names. On by default."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200,
+            "description": "Keep only the top rows by impressions. Defaults to 50."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "breakdown",
+          "startDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_validate_query",
+      "title": "linkedin validate query",
+      "description": "Check a pivot and metric combination against the LinkedIn reporting rules before spending a call on it. Returns the fields that would actually be sent, the ones LinkedIn would drop, and the twenty field ceiling. Makes no request to LinkedIn.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pivots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "One to three pivots, as a report would group them."
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 60
+            },
+            "minItems": 1,
+            "maxItems": 40,
+            "description": "Metric keys from linkedin://metrics."
+          },
+          "startDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive start, YYYY-MM-DD. Defaults to 30 days ago."
+          },
+          "endDate": {
+            "$ref": "#/properties/startDate",
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+          },
+          "timeGranularity": {
+            "type": "string",
+            "enum": [
+              "ALL",
+              "DAILY",
+              "MONTHLY",
+              "YEARLY"
+            ],
+            "description": "Native reporting aggregation interval. Defaults to ALL."
+          }
+        },
+        "required": [
+          "pivots",
+          "metrics"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_revenue_attribution",
+      "title": "linkedin get revenue attribution",
+      "description": "Read the LinkedIn Revenue Attribution Report: pipeline and closed won revenue from the CRM, attributed to LinkedIn advertising. Only answers for accounts whose Business Manager has a CRM connected, and only over a window of 30 to 366 days.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "pivots": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ACCOUNT",
+                "CAMPAIGN_GROUP",
+                "CAMPAIGN"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "One to three of ACCOUNT, CAMPAIGN_GROUP and CAMPAIGN. Defaults to CAMPAIGN."
+          },
+          "startDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive start, YYYY-MM-DD. The window must cover 30 to 366 days."
+          },
+          "endDate": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+          },
+          "campaignIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+          },
+          "campaignGroupIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Restrict reporting to these owned campaign-group IDs."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "startDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_delivery_status",
+      "title": "linkedin get delivery status",
+      "description": "Explain why LinkedIn ads are or are not serving, from the account down to the creative. LinkedIn keeps a user status and a system serving status side by side, and it is almost always the second one that says why nothing is running.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
+            },
+            "maxItems": 100,
+            "description": "Limit the campaign and creative scan to these campaigns."
+          },
+          "includeCreatives": {
+            "type": "boolean",
+            "description": "Also scan creatives. On by default."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_setup_guide",
+      "title": "linkedin get setup guide",
+      "description": "Read account, supported formats and native LinkedIn write requirements before preparing changes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_entity",
+      "title": "linkedin get entity",
+      "description": "Read one campaign group, campaign or creative and verify account ownership.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "adCampaignGroups",
+              "adCampaigns",
+              "creatives"
+            ],
+            "description": "Native resource type to read or modify."
+          },
+          "entityId": {
+            "type": "string",
+            "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$",
+            "description": "Native numeric ID or sponsoredCreative URN; account ownership is verified."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "kind",
+          "entityId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_find_targeting",
+      "title": "linkedin find targeting",
+      "description": "Look up native targeting URNs such as countries by name.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "description": "Search text used by the native targeting lookup."
+          },
+          "facet": {
+            "type": "string",
+            "pattern": "^urn:li:adTargetingFacet:[A-Za-z]+$",
+            "default": "urn:li:adTargetingFacet:locations",
+            "description": "Native targeting facet URN; defaults to location targeting."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "query"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_list_media",
+      "title": "linkedin list media",
+      "description": "List account image/video library files with download URLs and native processing status; not ad performance.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "images",
+              "videos"
+            ],
+            "description": "Library to list: images or videos."
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000,
+            "default": 0,
+            "description": "Zero-based offset in the media library page."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 30,
+            "description": "Maximum results in this page; inspect paging/coverage for additional data."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "kind"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_get_media",
+      "title": "linkedin get media",
+      "description": "Refresh one image/video URL and verify library association.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^urn:li:(image|video):[A-Za-z0-9_-]+$",
+            "description": "Exact urn:li:image or urn:li:video associated with the selected account library."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "mediaId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_list_ad_creatives",
+      "title": "linkedin list ad creatives",
+      "description": "List the images and playable videos used by the ads of an account, with the actual ad names. Separates landing URLs from media URLs. Does not report delivery.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 20,
+            "description": "Maximum ads scanned in this page; inspect coverage for additional data."
+          },
+          "pageToken": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+          },
+          "adIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$"
+            },
+            "maxItems": 10,
+            "description": "Exact ad IDs to resolve instead of listing a page, up to ten."
+          }
+        },
+        "required": [
+          "adAccountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_create_campaign_group",
+      "title": "linkedin create campaign group",
+      "description": "Create a DRAFT campaign group in a configured account. Preview by default.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "runSchedule": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Start, UTC epoch milliseconds."
+              },
+              "end": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Optional end, UTC epoch milliseconds, later than start."
+              }
+            },
+            "required": [
+              "start"
+            ],
+            "additionalProperties": false,
+            "description": "UTC epoch timestamps in milliseconds; optional end must be later than start."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "name",
+          "runSchedule"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_create_campaign",
+      "title": "linkedin create campaign",
+      "description": "Create an inactive (DRAFT) text or sponsored-content campaign. LinkedIn campaigns hold budget, targeting and bid. Audience expansion and the LinkedIn Audience Network stay off. Native compatibility still applies.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "campaignGroupId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Numeric parent campaign-group ID in the selected account."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "TEXT_AD",
+              "SPONSORED_UPDATES"
+            ],
+            "description": "TEXT_AD for text ads, SPONSORED_UPDATES for sponsored image or video posts."
+          },
+          "objectiveType": {
+            "type": "string",
+            "enum": [
+              "WEBSITE_VISIT",
+              "ENGAGEMENT",
+              "VIDEO_VIEW",
+              "BRAND_AWARENESS",
+              "WEBSITE_CONVERSION",
+              "LEAD_GENERATION"
+            ],
+            "description": "Native objective; must be compatible with the campaign type and ad format."
+          },
+          "dailyBudget": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d{1,2})?$",
+                "description": "Decimal amount in currency units, such as \"20.00\". Not micros or cents."
+              },
+              "currencyCode": {
+                "type": "string",
+                "pattern": "^[A-Z]{3}$",
+                "description": "ISO currency code. It must equal the ad account currency."
+              }
+            },
+            "required": [
+              "amount",
+              "currencyCode"
+            ],
+            "additionalProperties": false,
+            "description": "Daily budget in currency units, not minor units: amount \"20.00\" with currencyCode \"EUR\"."
+          },
+          "unitCost": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "$ref": "#/properties/dailyBudget/properties/amount"
+              },
+              "currencyCode": {
+                "$ref": "#/properties/dailyBudget/properties/currencyCode"
+              }
+            },
+            "required": [
+              "amount",
+              "currencyCode"
+            ],
+            "additionalProperties": false,
+            "description": "Maximum bid in account currency units, not cents."
+          },
+          "costType": {
+            "type": "string",
+            "enum": [
+              "CPC",
+              "CPM"
+            ],
+            "description": "Native bidding basis: CPC per click or CPM per thousand impressions."
+          },
+          "locale": {
+            "type": "object",
+            "properties": {
+              "country": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter country code, such as US."
+              },
+              "language": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 2,
+                "description": "Two-letter language code, such as en."
+              }
+            },
+            "required": [
+              "country",
+              "language"
+            ],
+            "additionalProperties": false,
+            "description": "Two-letter campaign language and country codes."
+          },
+          "targetingCriteria": {
+            "type": "object",
+            "properties": {
+              "include": {
+                "type": "object",
+                "properties": {
+                  "and": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "or": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "pattern": "^urn:li:[A-Za-z]+:[A-Za-z0-9_-]+$"
+                            },
+                            "minItems": 1,
+                            "maxItems": 200
+                          }
+                        }
+                      },
+                      "required": [
+                        "or"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "maxItems": 15
+                  }
+                },
+                "required": [
+                  "and"
+                ],
+                "additionalProperties": false
+              },
+              "exclude": {
+                "type": "object",
+                "properties": {
+                  "or": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/properties/targetingCriteria/properties/include/properties/and/items/properties/or/additionalProperties/items"
+                      },
+                      "minItems": 1,
+                      "maxItems": 200
+                    }
+                  }
+                },
+                "required": [
+                  "or"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "include"
+            ],
+            "additionalProperties": false,
+            "description": "Native LinkedIn targeting criteria with facet keys and entity URNs, such as { include: { and: [ { or: { \"urn:li:adTargetingFacet:locations\": [\"urn:li:geo:105015875\"] } } ] } }. Use linkedin_find_targeting first."
+          },
+          "runSchedule": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Start, UTC epoch milliseconds."
+              },
+              "end": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "description": "Optional end, UTC epoch milliseconds, later than start."
+              }
+            },
+            "required": [
+              "start"
+            ],
+            "additionalProperties": false,
+            "description": "UTC epoch timestamps in milliseconds; optional end must be later than start."
+          },
+          "politicalIntent": {
+            "type": "string",
+            "enum": [
+              "NOT_POLITICAL",
+              "POLITICAL"
+            ],
+            "description": "Explicit advertiser declaration; do not infer."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "name",
+          "campaignGroupId",
+          "type",
+          "objectiveType",
+          "dailyBudget",
+          "unitCost",
+          "costType",
+          "locale",
+          "targetingCriteria",
+          "runSchedule",
+          "politicalIntent"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_create_text_ad",
+      "title": "linkedin create text ad",
+      "description": "Create a DRAFT text ad with an existing account-library image. Preview by default.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "campaignId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Numeric parent campaign ID in the selected account."
+          },
+          "image": {
+            "type": "string",
+            "pattern": "^urn:li:image:[A-Za-z0-9_-]+$",
+            "description": "Exact image URN already uploaded into the selected account library."
+          },
+          "headline": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 25,
+            "description": "Text ad headline, up to 25 characters."
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 75,
+            "description": "Text ad body, up to 75 characters."
+          },
+          "landingPage": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2000,
+            "description": "HTTPS click destination; separate from the image/video download URL."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "name",
+          "campaignId",
+          "image",
+          "headline",
+          "description",
+          "landingPage"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_create_media_ad",
+      "title": "linkedin create media ad",
+      "description": "Create a DRAFT sponsored image/video ad, with a dark post (feedDistribution NONE). Does not publish an organic feed post.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "campaignId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Numeric parent campaign ID in the selected account."
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^urn:li:(image|video):[A-Za-z0-9_-]+$",
+            "description": "Exact urn:li:image or urn:li:video associated with the selected account library."
+          },
+          "commentary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 3000,
+            "description": "Sponsored post copy. The created post is excluded from organic feed distribution."
+          },
+          "landingPage": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2000,
+            "description": "HTTPS click destination; separate from the image/video download URL."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "name",
+          "campaignId",
+          "mediaId",
+          "commentary",
+          "landingPage"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_update_entity",
+      "title": "linkedin update entity",
+      "description": "Rename, pause/archive or edit budget, schedule, targeting or text-ad content of an owned campaign/group/ad in the selected account. No activation offered. Nested settings replace the corresponding object.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "adCampaignGroups",
+              "adCampaigns",
+              "creatives"
+            ],
+            "description": "Native resource type to read or modify."
+          },
+          "entityId": {
+            "type": "string",
+            "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$",
+            "description": "Native numeric ID or sponsoredCreative URN; account ownership is verified."
+          },
+          "fields": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200,
+                "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "PAUSED",
+                  "ARCHIVED"
+                ],
+                "description": "Campaign group or campaign status. ACTIVE is not offered."
+              },
+              "intendedStatus": {
+                "type": "string",
+                "enum": [
+                  "DRAFT",
+                  "PAUSED",
+                  "ARCHIVED"
+                ],
+                "description": "Ad (creative) status. ACTIVE is not offered."
+              },
+              "dailyBudget": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d+(\\.\\d{1,2})?$",
+                    "description": "Decimal amount in currency units, such as \"20.00\". Not micros or cents."
+                  },
+                  "currencyCode": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "ISO currency code. It must equal the ad account currency."
+                  }
+                },
+                "required": [
+                  "amount",
+                  "currencyCode"
+                ],
+                "additionalProperties": false,
+                "description": "Daily budget in account currency units."
+              },
+              "unitCost": {
+                "$ref": "#/properties/fields/properties/dailyBudget",
+                "description": "Maximum bid in account currency units."
+              },
+              "runSchedule": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "description": "Start, UTC epoch milliseconds."
+                  },
+                  "end": {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "description": "Optional end, UTC epoch milliseconds, later than start."
+                  }
+                },
+                "required": [
+                  "start"
+                ],
+                "additionalProperties": false,
+                "description": "UTC epoch timestamps in milliseconds; optional end must be later than start."
+              },
+              "targetingCriteria": {
+                "type": "object",
+                "properties": {
+                  "include": {
+                    "type": "object",
+                    "properties": {
+                      "and": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "or": {
+                              "type": "object",
+                              "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "pattern": "^urn:li:[A-Za-z]+:[A-Za-z0-9_-]+$"
+                                },
+                                "minItems": 1,
+                                "maxItems": 200
+                              }
+                            }
+                          },
+                          "required": [
+                            "or"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 15
+                      }
+                    },
+                    "required": [
+                      "and"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "exclude": {
+                    "type": "object",
+                    "properties": {
+                      "or": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/properties/fields/properties/targetingCriteria/properties/include/properties/and/items/properties/or/additionalProperties/items"
+                          },
+                          "minItems": 1,
+                          "maxItems": 200
+                        }
+                      }
+                    },
+                    "required": [
+                      "or"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "include"
+                ],
+                "additionalProperties": false,
+                "description": "Native LinkedIn targeting criteria with facet keys and entity URNs, such as { include: { and: [ { or: { \"urn:li:adTargetingFacet:locations\": [\"urn:li:geo:105015875\"] } } ] } }. Use linkedin_find_targeting first."
+              },
+              "textAd": {
+                "type": "object",
+                "properties": {
+                  "headline": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 25,
+                    "description": "Text ad headline, up to 25 characters."
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 75,
+                    "description": "Text ad body, up to 75 characters."
+                  },
+                  "landingPage": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 2000,
+                    "description": "HTTPS click destination; separate from the image/video download URL."
+                  },
+                  "image": {
+                    "type": "string",
+                    "pattern": "^urn:li:image:[A-Za-z0-9_-]+$",
+                    "description": "Exact image URN already uploaded into the selected account library."
+                  }
+                },
+                "additionalProperties": false,
+                "description": "Partial text-ad content edit. Other existing text fields are preserved. Not applicable to sponsored posts."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Only these supplied fields are changed. Nested values replace the corresponding native object."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "kind",
+          "entityId",
+          "fields"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_rename_campaign_group",
+      "title": "linkedin rename campaign group",
+      "description": "Rename an owned LinkedIn campaign group in the selected account. The name is the only thing that changes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignGroupId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Numeric parent campaign-group ID in the selected account."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "campaignGroupId",
+          "name"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_rename_campaign",
+      "title": "linkedin rename campaign",
+      "description": "Rename an owned LinkedIn campaign in the selected account. The name is the only thing that changes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "campaignId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Numeric parent campaign ID in the selected account."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "campaignId",
+          "name"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_rename_ad",
+      "title": "linkedin rename ad",
+      "description": "Rename an owned LinkedIn ad (creative) in the selected account. The name is the only thing that changes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "adId": {
+            "type": "string",
+            "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$",
+            "description": "Creative ID or urn:li:sponsoredCreative URN."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "adId",
+          "name"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_rename_ad_account",
+      "title": "linkedin rename ad account",
+      "description": "Rename the selected LinkedIn ad account. The name is the only thing that changes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "name"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_duplicate_ad",
+      "title": "linkedin duplicate ad",
+      "description": "Duplicate a selected account ad into a verified campaign as DRAFT, reusing its exact content reference. Does not duplicate campaign settings or activate delivery.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "sourceCreativeId": {
+            "type": "string",
+            "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$",
+            "description": "Existing ad to copy, verified within the selected account."
+          },
+          "campaignId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Numeric parent campaign ID in the selected account."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "sourceCreativeId",
+          "campaignId",
+          "name"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_delete_draft_ad",
+      "title": "linkedin delete draft ad",
+      "description": "Delete one owned DRAFT creative in the selected account. Does not delete its source post or media.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "creativeId": {
+            "type": "string",
+            "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$",
+            "description": "Numeric ad ID or urn:li:sponsoredCreative ID in the selected account."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "creativeId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_initialize_upload",
+      "title": "linkedin initialize upload",
+      "description": "Initialize image/video upload to the selected account library. Returns a signed receipt for part upload and finalization. No arbitrary upload host accepted.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "image",
+              "video"
+            ],
+            "description": "Media type to upload: image or video."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "fileSizeBytes": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 209715200,
+            "description": "Exact binary file size in bytes; images up to 8 MiB, videos up to 200 MiB."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "kind",
+          "name",
+          "fileSizeBytes"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_upload_part",
+      "title": "linkedin upload part",
+      "description": "Upload one base64 file part using the signed initialization receipt. Up to 8 MiB decoded; file bytes stay at LinkedIn. No token sent to upload host.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "receipt": {
+            "type": "string",
+            "maxLength": 60000,
+            "description": "Signed initialization receipt returned by linkedin_initialize_upload; preserve it exactly."
+          },
+          "partIndex": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Zero-based part index returned during upload initialization."
+          },
+          "bytesBase64": {
+            "type": "string",
+            "maxLength": 12582912,
+            "description": "Base64 encoding of the exact required part bytes, up to 8 MiB decoded."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "receipt",
+          "partIndex",
+          "bytesBase64"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_finalize_upload",
+      "title": "linkedin finalize upload",
+      "description": "Finalize a video after all signed parts were uploaded. Check processing with linkedin_get_media until AVAILABLE; never substitute the cover for video.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "receipt": {
+            "type": "string",
+            "maxLength": 60000,
+            "description": "Signed initialization receipt returned by linkedin_initialize_upload; preserve it exactly."
+          },
+          "partReceipts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 3000
+            },
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "Signed receipts returned by linkedin_upload_part, one for every video part."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "receipt",
+          "partReceipts"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "linkedin_update_media",
+      "title": "linkedin update media",
+      "description": "Rename or archive an owned account-library image/video. Binary content is immutable; upload a new asset to replace it.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "adAccountId": {
+            "type": "string",
+            "pattern": "^\\d+$",
+            "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
+          },
+          "mediaId": {
+            "type": "string",
+            "pattern": "^urn:li:(image|video):[A-Za-z0-9_-]+$",
+            "description": "Exact urn:li:image or urn:li:video associated with the selected account library."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "description": "Name stored in LinkedIn; does not rename source files or organic posts."
+          },
+          "mediaLibraryStatus": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ARCHIVED"
+            ],
+            "description": "Archive or restore the library listing; does not replace binary content or alter ad status."
+          },
+          "confirm": {
+            "type": "boolean",
+            "default": false,
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+          }
+        },
+        "required": [
+          "adAccountId",
+          "mediaId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": true
+              },
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original tool result: parsed JSON when the text is JSON, otherwise the text. Provider fields depend on the selected query."
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": true,
+        "idempotentHint": false,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "linkedin-manifest",
+      "uri": "linkedin://manifest",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "linkedin-metrics",
+      "uri": "linkedin://metrics",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "linkedin-pivots",
+      "uri": "linkedin://pivots",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "linkedin-reporting-rules",
+      "uri": "linkedin://reporting-rules",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "linkedin-targeting",
+      "uri": "linkedin://targeting",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "linkedin-recipes",
+      "uri": "linkedin://recipes",
+      "mimeType": "application/json"
+    }
+  ],
+  "prompts": []
+}
