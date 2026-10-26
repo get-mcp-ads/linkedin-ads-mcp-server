@@ -2,7 +2,7 @@
   "serverInfo": {
     "name": "@getmcpads/linkedin-ads-mcp-server",
     "title": "LinkedIn Ads MCP server: 18 read tools, 15 opt-in preview-first writes.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "websiteUrl": "https://www.getmcpads.com/tools/linkedin-ads",
     "icons": [
       {
@@ -20,12 +20,11 @@
         "type": "object",
         "properties": {
           "adAccountId": {
+            "description": "Optional configured account to probe for reporting access. Defaults to the first reachable one.",
             "type": "string",
-            "pattern": "^\\d+$",
-            "description": "Optional configured account to probe for reporting access. Defaults to the first reachable one."
+            "pattern": "^\\d+$"
           }
         },
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -36,7 +35,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -61,8 +60,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -82,15 +81,16 @@
         "type": "object",
         "properties": {
           "adAccountIds": {
+            "description": "Configured account IDs to list. Defaults to every configured account.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Configured account IDs to list. Defaults to every configured account."
+            }
           },
           "status": {
+            "description": "Keep only accounts in these native statuses.",
             "type": "array",
             "items": {
               "type": "string",
@@ -101,15 +101,13 @@
                 "PENDING_DELETION",
                 "REMOVED"
               ]
-            },
-            "description": "Keep only accounts in these native statuses."
+            }
           },
           "includeTestAccounts": {
-            "type": "boolean",
-            "description": "Test accounts never serve and never report. Off by default."
+            "description": "Test accounts never serve and never report. Off by default.",
+            "type": "boolean"
           }
         },
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -120,7 +118,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -145,8 +143,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -171,14 +169,13 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "includeUsers": {
-            "type": "boolean",
-            "description": "Also list the account users and their roles. On by default."
+            "description": "Also list the account users and their roles. On by default.",
+            "type": "boolean"
           }
         },
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -189,7 +186,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -214,8 +211,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -240,6 +237,7 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "status": {
+            "description": "Keep only campaign groups in these native statuses.",
             "type": "array",
             "items": {
               "type": "string",
@@ -252,35 +250,33 @@
                 "PENDING_DELETION",
                 "REMOVED"
               ]
-            },
-            "description": "Keep only campaign groups in these native statuses."
+            }
           },
           "name": {
+            "description": "Exact campaign group names to match.",
+            "maxItems": 50,
             "type": "array",
             "items": {
               "type": "string",
               "minLength": 1,
               "maxLength": 200
-            },
-            "maxItems": 50,
-            "description": "Exact campaign group names to match."
+            }
           },
           "pageSize": {
+            "description": "Maximum items in this page, 1 to 100. Defaults to 100.",
             "type": "integer",
             "minimum": 1,
-            "maximum": 100,
-            "description": "Maximum items in this page, 1 to 100. Defaults to 100."
+            "maximum": 100
           },
           "pageToken": {
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page.",
             "type": "string",
-            "maxLength": 2000,
-            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+            "maxLength": 2000
           }
         },
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -291,7 +287,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -316,8 +312,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -342,6 +338,7 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "status": {
+            "description": "Keep only campaigns in these native statuses.",
             "type": "array",
             "items": {
               "type": "string",
@@ -355,10 +352,10 @@
                 "PENDING_DELETION",
                 "REMOVED"
               ]
-            },
-            "description": "Keep only campaigns in these native statuses."
+            }
           },
           "type": {
+            "description": "Keep only these campaign formats, such as TEXT_AD or SPONSORED_UPDATES.",
             "type": "array",
             "items": {
               "type": "string",
@@ -368,44 +365,42 @@
                 "SPONSORED_INMAILS",
                 "DYNAMIC"
               ]
-            },
-            "description": "Keep only these campaign formats, such as TEXT_AD or SPONSORED_UPDATES."
+            }
           },
           "name": {
+            "description": "Exact campaign names to match.",
+            "maxItems": 50,
             "type": "array",
             "items": {
               "type": "string",
               "minLength": 1,
               "maxLength": 200
-            },
-            "maxItems": 50,
-            "description": "Exact campaign names to match."
+            }
           },
           "campaignGroupId": {
+            "description": "Keep only campaigns in this campaign group of the selected account.",
             "type": "string",
-            "pattern": "^(urn:li:sponsoredCampaignGroup:)?\\d+$",
-            "description": "Keep only campaigns in this campaign group of the selected account."
+            "pattern": "^(urn:li:sponsoredCampaignGroup:)?\\d+$"
           },
           "includeTargeting": {
-            "type": "boolean",
-            "description": "Return the raw targetingCriteria object. Off by default because it is verbose."
+            "description": "Return the raw targetingCriteria object. Off by default because it is verbose.",
+            "type": "boolean"
           },
           "pageSize": {
+            "description": "Maximum items in this page, 1 to 100. Defaults to 100.",
             "type": "integer",
             "minimum": 1,
-            "maximum": 100,
-            "description": "Maximum items in this page, 1 to 100. Defaults to 100."
+            "maximum": 100
           },
           "pageToken": {
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page.",
             "type": "string",
-            "maxLength": 2000,
-            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+            "maxLength": 2000
           }
         },
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -416,7 +411,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -441,8 +436,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -467,15 +462,16 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "campaignIds": {
+            "description": "Sponsored campaign IDs or URNs in the selected account.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Sponsored campaign IDs or URNs in the selected account."
+            }
           },
           "intendedStatuses": {
+            "description": "Filter by native configured ad statuses, not effective delivery status.",
             "type": "array",
             "items": {
               "type": "string",
@@ -488,29 +484,27 @@
                 "PENDING_DELETION",
                 "REMOVED"
               ]
-            },
-            "description": "Filter by native configured ad statuses, not effective delivery status."
+            }
           },
           "includeContent": {
-            "type": "boolean",
-            "description": "Return the raw content object of each creative. Off by default."
+            "description": "Return the raw content object of each creative. Off by default.",
+            "type": "boolean"
           },
           "pageSize": {
+            "description": "Maximum items in this page, 1 to 100. Defaults to 100.",
             "type": "integer",
             "minimum": 1,
-            "maximum": 100,
-            "description": "Maximum items in this page, 1 to 100. Defaults to 100."
+            "maximum": 100
           },
           "pageToken": {
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page.",
             "type": "string",
-            "maxLength": 2000,
-            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+            "maxLength": 2000
           }
         },
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -521,7 +515,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -546,8 +540,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -572,36 +566,36 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "campaignIds": {
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+            }
           },
           "campaignGroupIds": {
+            "description": "Restrict reporting to these owned campaign-group IDs.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these owned campaign-group IDs."
+            }
           },
           "creativeIds": {
+            "description": "Restrict reporting to these owned creative IDs.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these owned creative IDs."
+            }
           },
           "pivot": {
+            "description": "Grouping. Defaults to CAMPAIGN. One of: ACCOUNT, CAMPAIGN_GROUP, CAMPAIGN, CREATIVE, COMPANY, SHARE, CONVERSION, MEMBER_COMPANY, MEMBER_COMPANY_SIZE, MEMBER_INDUSTRY, MEMBER_SENIORITY, MEMBER_JOB_TITLE, MEMBER_JOB_FUNCTION, MEMBER_COUNTRY_V2, MEMBER_REGION_V2, MEMBER_COUNTY, SERVING_LOCATION, PLACEMENT_NAME, IMPRESSION_DEVICE_TYPE, EVENT_STAGE, CARD_INDEX, CONVERSATION_NODE, CONVERSATION_NODE_OPTION_INDEX.",
             "type": "string",
-            "maxLength": 40,
-            "description": "Grouping. Defaults to CAMPAIGN. One of: ACCOUNT, CAMPAIGN_GROUP, CAMPAIGN, CREATIVE, COMPANY, SHARE, CONVERSION, MEMBER_COMPANY, MEMBER_COMPANY_SIZE, MEMBER_INDUSTRY, MEMBER_SENIORITY, MEMBER_JOB_TITLE, MEMBER_JOB_FUNCTION, MEMBER_COUNTRY_V2, MEMBER_REGION_V2, MEMBER_COUNTY, SERVING_LOCATION, PLACEMENT_NAME, IMPRESSION_DEVICE_TYPE, EVENT_STAGE, CARD_INDEX, CONVERSATION_NODE, CONVERSATION_NODE_OPTION_INDEX."
+            "maxLength": 40
           },
           "startDate": {
             "type": "string",
@@ -609,40 +603,41 @@
             "description": "Inclusive start, YYYY-MM-DD."
           },
           "endDate": {
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today.",
             "type": "string",
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           },
           "timeGranularity": {
+            "description": "Defaults to ALL, one row for the whole range.",
             "type": "string",
             "enum": [
               "ALL",
               "DAILY",
               "MONTHLY",
               "YEARLY"
-            ],
-            "description": "Defaults to ALL, one row for the whole range."
+            ]
           },
           "metrics": {
+            "description": "Metric keys from linkedin://metrics. Defaults to spend, impressions, clicks and the ratios.",
+            "maxItems": 40,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 60
-            },
-            "maxItems": 40,
-            "description": "Metric keys from linkedin://metrics. Defaults to spend, impressions, clicks and the ratios."
+            }
           },
           "campaignType": {
+            "description": "Native campaign format filter.",
             "type": "string",
             "enum": [
               "TEXT_AD",
               "SPONSORED_UPDATES",
               "SPONSORED_INMAILS",
               "DYNAMIC"
-            ],
-            "description": "Native campaign format filter."
+            ]
           },
           "sortField": {
+            "description": "Native field used to order the returned rows.",
             "type": "string",
             "enum": [
               "COST_IN_LOCAL_CURRENCY",
@@ -652,23 +647,21 @@
               "OPENS",
               "SENDS",
               "EXTERNAL_WEBSITE_CONVERSIONS"
-            ],
-            "description": "Native field used to order the returned rows."
+            ]
           },
           "sortOrder": {
+            "description": "Ascending or descending native result ordering.",
             "type": "string",
             "enum": [
               "ASCENDING",
               "DESCENDING"
-            ],
-            "description": "Ascending or descending native result ordering."
+            ]
           }
         },
         "required": [
           "adAccountId",
           "startDate"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -679,7 +672,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -704,8 +697,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -730,40 +723,40 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "campaignIds": {
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+            }
           },
           "campaignGroupIds": {
+            "description": "Restrict reporting to these owned campaign-group IDs.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these owned campaign-group IDs."
+            }
           },
           "creativeIds": {
+            "description": "Restrict reporting to these owned creative IDs.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these owned creative IDs."
+            }
           },
           "pivots": {
+            "minItems": 1,
+            "maxItems": 3,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 40
             },
-            "minItems": 1,
-            "maxItems": 3,
             "description": "One to three pivots. Order decides the order of pivotValues."
           },
           "startDate": {
@@ -772,40 +765,41 @@
             "description": "Inclusive start, YYYY-MM-DD."
           },
           "endDate": {
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today.",
             "type": "string",
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           },
           "timeGranularity": {
+            "description": "Native reporting aggregation interval. Defaults to ALL.",
             "type": "string",
             "enum": [
               "ALL",
               "DAILY",
               "MONTHLY",
               "YEARLY"
-            ],
-            "description": "Native reporting aggregation interval. Defaults to ALL."
+            ]
           },
           "metrics": {
+            "description": "Metric keys from linkedin://metrics. Defaults to spend, impressions, clicks and the ratios.",
+            "maxItems": 40,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 60
-            },
-            "maxItems": 40,
-            "description": "Metric keys from linkedin://metrics. Defaults to spend, impressions, clicks and the ratios."
+            }
           },
           "campaignType": {
+            "description": "Native campaign format filter.",
             "type": "string",
             "enum": [
               "TEXT_AD",
               "SPONSORED_UPDATES",
               "SPONSORED_INMAILS",
               "DYNAMIC"
-            ],
-            "description": "Native campaign format filter."
+            ]
           },
           "objectiveType": {
+            "description": "Native campaign objective filter.",
             "type": "string",
             "enum": [
               "LEAD_GENERATION",
@@ -817,8 +811,7 @@
               "WEBSITE_VISIT",
               "ENGAGEMENT",
               "JOB_APPLICANT"
-            ],
-            "description": "Native campaign objective filter."
+            ]
           }
         },
         "required": [
@@ -826,7 +819,6 @@
           "pivots",
           "startDate"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -837,7 +829,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -862,8 +854,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -888,22 +880,22 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "campaignIds": {
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+            }
           },
           "campaignGroupIds": {
+            "description": "Restrict reporting to these owned campaign-group IDs.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these owned campaign-group IDs."
+            }
           },
           "breakdown": {
             "type": "string",
@@ -926,28 +918,28 @@
             "description": "Inclusive start, YYYY-MM-DD."
           },
           "endDate": {
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today.",
             "type": "string",
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           },
           "metrics": {
+            "description": "Defaults to spend, impressions, clicks and CTR. Conversion value, carousel and reach fields are not available here.",
+            "maxItems": 40,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 60
-            },
-            "maxItems": 40,
-            "description": "Defaults to spend, impressions, clicks and CTR. Conversion value, carousel and reach fields are not available here."
+            }
           },
           "resolveNames": {
-            "type": "boolean",
-            "description": "Resolve the returned URNs to readable names. On by default."
+            "description": "Resolve the returned URNs to readable names. On by default.",
+            "type": "boolean"
           },
           "limit": {
+            "description": "Keep only the top rows by impressions. Defaults to 50.",
             "type": "integer",
             "minimum": 1,
-            "maximum": 200,
-            "description": "Keep only the top rows by impressions. Defaults to 50."
+            "maximum": 200
           }
         },
         "required": [
@@ -955,7 +947,6 @@
           "breakdown",
           "startDate"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -966,7 +957,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -991,8 +982,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1012,50 +1003,50 @@
         "type": "object",
         "properties": {
           "pivots": {
+            "minItems": 1,
+            "maxItems": 3,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 40
             },
-            "minItems": 1,
-            "maxItems": 3,
             "description": "One to three pivots, as a report would group them."
           },
           "metrics": {
+            "minItems": 1,
+            "maxItems": 40,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 60
             },
-            "minItems": 1,
-            "maxItems": 40,
             "description": "Metric keys from linkedin://metrics."
           },
           "startDate": {
+            "description": "Inclusive start, YYYY-MM-DD. Defaults to 30 days ago.",
             "type": "string",
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "description": "Inclusive start, YYYY-MM-DD. Defaults to 30 days ago."
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           },
           "endDate": {
-            "$ref": "#/properties/startDate",
-            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today.",
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           },
           "timeGranularity": {
+            "description": "Native reporting aggregation interval. Defaults to ALL.",
             "type": "string",
             "enum": [
               "ALL",
               "DAILY",
               "MONTHLY",
               "YEARLY"
-            ],
-            "description": "Native reporting aggregation interval. Defaults to ALL."
+            ]
           }
         },
         "required": [
           "pivots",
           "metrics"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1066,7 +1057,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1091,8 +1082,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1117,6 +1108,9 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "pivots": {
+            "description": "One to three of ACCOUNT, CAMPAIGN_GROUP and CAMPAIGN. Defaults to CAMPAIGN.",
+            "minItems": 1,
+            "maxItems": 3,
             "type": "array",
             "items": {
               "type": "string",
@@ -1125,10 +1119,7 @@
                 "CAMPAIGN_GROUP",
                 "CAMPAIGN"
               ]
-            },
-            "minItems": 1,
-            "maxItems": 3,
-            "description": "One to three of ACCOUNT, CAMPAIGN_GROUP and CAMPAIGN. Defaults to CAMPAIGN."
+            }
           },
           "startDate": {
             "type": "string",
@@ -1136,34 +1127,33 @@
             "description": "Inclusive start, YYYY-MM-DD. The window must cover 30 to 366 days."
           },
           "endDate": {
+            "description": "Inclusive end, YYYY-MM-DD. Defaults to today.",
             "type": "string",
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "description": "Inclusive end, YYYY-MM-DD. Defaults to today."
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
           },
           "campaignIds": {
+            "description": "Restrict reporting to these campaign IDs or URNs in the selected account.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these campaign IDs or URNs in the selected account."
+            }
           },
           "campaignGroupIds": {
+            "description": "Restrict reporting to these owned campaign-group IDs.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Restrict reporting to these owned campaign-group IDs."
+            }
           }
         },
         "required": [
           "adAccountId",
           "startDate"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1174,7 +1164,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1199,8 +1189,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1225,23 +1215,22 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "campaignIds": {
+            "description": "Limit the campaign and creative scan to these campaigns.",
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(urn:li:[A-Za-z]+:)?\\d+$"
-            },
-            "maxItems": 100,
-            "description": "Limit the campaign and creative scan to these campaigns."
+            }
           },
           "includeCreatives": {
-            "type": "boolean",
-            "description": "Also scan creatives. On by default."
+            "description": "Also scan creatives. On by default.",
+            "type": "boolean"
           }
         },
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1252,7 +1241,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1277,8 +1266,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1306,7 +1295,6 @@
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1317,7 +1305,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1342,8 +1330,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1387,7 +1375,6 @@
           "kind",
           "entityId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1398,7 +1385,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1423,8 +1410,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1455,17 +1442,16 @@
             "description": "Search text used by the native targeting lookup."
           },
           "facet": {
-            "type": "string",
-            "pattern": "^urn:li:adTargetingFacet:[A-Za-z]+$",
+            "description": "Native targeting facet URN; defaults to location targeting.",
             "default": "urn:li:adTargetingFacet:locations",
-            "description": "Native targeting facet URN; defaults to location targeting."
+            "type": "string",
+            "pattern": "^urn:li:adTargetingFacet:[A-Za-z]+$"
           }
         },
         "required": [
           "adAccountId",
           "query"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1476,7 +1462,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1501,8 +1487,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1535,25 +1521,24 @@
             "description": "Library to list: images or videos."
           },
           "start": {
+            "description": "Zero-based offset in the media library page.",
+            "default": 0,
             "type": "integer",
             "minimum": 0,
-            "maximum": 10000,
-            "default": 0,
-            "description": "Zero-based offset in the media library page."
+            "maximum": 10000
           },
           "limit": {
+            "description": "Maximum results in this page; inspect paging/coverage for additional data.",
+            "default": 30,
             "type": "integer",
             "minimum": 1,
-            "maximum": 100,
-            "default": 30,
-            "description": "Maximum results in this page; inspect paging/coverage for additional data."
+            "maximum": 100
           }
         },
         "required": [
           "adAccountId",
           "kind"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1564,7 +1549,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1589,8 +1574,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1624,7 +1609,6 @@
           "adAccountId",
           "mediaId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1635,7 +1619,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1660,8 +1644,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1686,31 +1670,30 @@
             "description": "Selected LinkedIn advertising account, numeric ID. It must be listed in LINKEDIN_ADS_ACCOUNT_IDS."
           },
           "limit": {
+            "description": "Maximum ads scanned in this page; inspect coverage for additional data.",
+            "default": 20,
             "type": "integer",
             "minimum": 1,
-            "maximum": 50,
-            "default": 20,
-            "description": "Maximum ads scanned in this page; inspect coverage for additional data."
+            "maximum": 50
           },
           "pageToken": {
+            "description": "Opaque nextPageToken from the preceding response; omit for the first page.",
             "type": "string",
-            "maxLength": 2000,
-            "description": "Opaque nextPageToken from the preceding response; omit for the first page."
+            "maxLength": 2000
           },
           "adIds": {
+            "description": "Exact ad IDs to resolve instead of listing a page, up to ten.",
+            "maxItems": 10,
             "type": "array",
             "items": {
               "type": "string",
               "pattern": "^(\\d+|urn:li:sponsoredCreative:\\d+)$"
-            },
-            "maxItems": 10,
-            "description": "Exact ad IDs to resolve instead of listing a page, up to ten."
+            }
           }
         },
         "required": [
           "adAccountId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1721,7 +1704,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1746,8 +1729,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": true,
@@ -1783,12 +1766,14 @@
               "start": {
                 "type": "integer",
                 "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
                 "description": "Start, UTC epoch milliseconds."
               },
               "end": {
+                "description": "Optional end, UTC epoch milliseconds, later than start.",
                 "type": "integer",
                 "exclusiveMinimum": 0,
-                "description": "Optional end, UTC epoch milliseconds, later than start."
+                "maximum": 9007199254740991
               }
             },
             "required": [
@@ -1798,9 +1783,9 @@
             "description": "UTC epoch timestamps in milliseconds; optional end must be later than start."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -1808,7 +1793,6 @@
           "name",
           "runSchedule"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -1819,7 +1803,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -1844,8 +1828,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -1925,10 +1909,14 @@
             "type": "object",
             "properties": {
               "amount": {
-                "$ref": "#/properties/dailyBudget/properties/amount"
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d{1,2})?$",
+                "description": "Decimal amount in currency units, such as \"20.00\". Not micros or cents."
               },
               "currencyCode": {
-                "$ref": "#/properties/dailyBudget/properties/currencyCode"
+                "type": "string",
+                "pattern": "^[A-Z]{3}$",
+                "description": "ISO currency code. It must equal the ad account currency."
               }
             },
             "required": [
@@ -1976,20 +1964,25 @@
                 "type": "object",
                 "properties": {
                   "and": {
+                    "minItems": 1,
+                    "maxItems": 15,
                     "type": "array",
                     "items": {
                       "type": "object",
                       "properties": {
                         "or": {
                           "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
                           "additionalProperties": {
+                            "minItems": 1,
+                            "maxItems": 200,
                             "type": "array",
                             "items": {
                               "type": "string",
                               "pattern": "^urn:li:[A-Za-z]+:[A-Za-z0-9_-]+$"
-                            },
-                            "minItems": 1,
-                            "maxItems": 200
+                            }
                           }
                         }
                       },
@@ -1997,9 +1990,7 @@
                         "or"
                       ],
                       "additionalProperties": false
-                    },
-                    "minItems": 1,
-                    "maxItems": 15
+                    }
                   }
                 },
                 "required": [
@@ -2012,13 +2003,17 @@
                 "properties": {
                   "or": {
                     "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
                     "additionalProperties": {
+                      "minItems": 1,
+                      "maxItems": 200,
                       "type": "array",
                       "items": {
-                        "$ref": "#/properties/targetingCriteria/properties/include/properties/and/items/properties/or/additionalProperties/items"
-                      },
-                      "minItems": 1,
-                      "maxItems": 200
+                        "type": "string",
+                        "pattern": "^urn:li:[A-Za-z]+:[A-Za-z0-9_-]+$"
+                      }
                     }
                   }
                 },
@@ -2040,12 +2035,14 @@
               "start": {
                 "type": "integer",
                 "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
                 "description": "Start, UTC epoch milliseconds."
               },
               "end": {
+                "description": "Optional end, UTC epoch milliseconds, later than start.",
                 "type": "integer",
                 "exclusiveMinimum": 0,
-                "description": "Optional end, UTC epoch milliseconds, later than start."
+                "maximum": 9007199254740991
               }
             },
             "required": [
@@ -2063,9 +2060,9 @@
             "description": "Explicit advertiser declaration; do not infer."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2082,7 +2079,6 @@
           "runSchedule",
           "politicalIntent"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2093,7 +2089,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2118,8 +2114,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2173,14 +2169,14 @@
           },
           "landingPage": {
             "type": "string",
-            "format": "uri",
             "maxLength": 2000,
+            "format": "uri",
             "description": "HTTPS click destination; separate from the image/video download URL."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2192,7 +2188,6 @@
           "description",
           "landingPage"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2203,7 +2198,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2228,8 +2223,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2277,14 +2272,14 @@
           },
           "landingPage": {
             "type": "string",
-            "format": "uri",
             "maxLength": 2000,
+            "format": "uri",
             "description": "HTTPS click destination; separate from the image/video download URL."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2295,7 +2290,6 @@
           "commentary",
           "landingPage"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2306,7 +2300,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2331,8 +2325,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2380,23 +2374,24 @@
                 "description": "Name stored in LinkedIn; does not rename source files or organic posts."
               },
               "status": {
+                "description": "Campaign group or campaign status. ACTIVE is not offered.",
                 "type": "string",
                 "enum": [
                   "PAUSED",
                   "ARCHIVED"
-                ],
-                "description": "Campaign group or campaign status. ACTIVE is not offered."
+                ]
               },
               "intendedStatus": {
+                "description": "Ad (creative) status. ACTIVE is not offered.",
                 "type": "string",
                 "enum": [
                   "DRAFT",
                   "PAUSED",
                   "ARCHIVED"
-                ],
-                "description": "Ad (creative) status. ACTIVE is not offered."
+                ]
               },
               "dailyBudget": {
+                "description": "Daily budget in account currency units.",
                 "type": "object",
                 "properties": {
                   "amount": {
@@ -2414,12 +2409,28 @@
                   "amount",
                   "currencyCode"
                 ],
-                "additionalProperties": false,
-                "description": "Daily budget in account currency units."
+                "additionalProperties": false
               },
               "unitCost": {
-                "$ref": "#/properties/fields/properties/dailyBudget",
-                "description": "Maximum bid in account currency units."
+                "description": "Maximum bid in account currency units.",
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "pattern": "^\\d+(\\.\\d{1,2})?$",
+                    "description": "Decimal amount in currency units, such as \"20.00\". Not micros or cents."
+                  },
+                  "currencyCode": {
+                    "type": "string",
+                    "pattern": "^[A-Z]{3}$",
+                    "description": "ISO currency code. It must equal the ad account currency."
+                  }
+                },
+                "required": [
+                  "amount",
+                  "currencyCode"
+                ],
+                "additionalProperties": false
               },
               "runSchedule": {
                 "type": "object",
@@ -2427,12 +2438,14 @@
                   "start": {
                     "type": "integer",
                     "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
                     "description": "Start, UTC epoch milliseconds."
                   },
                   "end": {
+                    "description": "Optional end, UTC epoch milliseconds, later than start.",
                     "type": "integer",
                     "exclusiveMinimum": 0,
-                    "description": "Optional end, UTC epoch milliseconds, later than start."
+                    "maximum": 9007199254740991
                   }
                 },
                 "required": [
@@ -2448,20 +2461,25 @@
                     "type": "object",
                     "properties": {
                       "and": {
+                        "minItems": 1,
+                        "maxItems": 15,
                         "type": "array",
                         "items": {
                           "type": "object",
                           "properties": {
                             "or": {
                               "type": "object",
+                              "propertyNames": {
+                                "type": "string"
+                              },
                               "additionalProperties": {
+                                "minItems": 1,
+                                "maxItems": 200,
                                 "type": "array",
                                 "items": {
                                   "type": "string",
                                   "pattern": "^urn:li:[A-Za-z]+:[A-Za-z0-9_-]+$"
-                                },
-                                "minItems": 1,
-                                "maxItems": 200
+                                }
                               }
                             }
                           },
@@ -2469,9 +2487,7 @@
                             "or"
                           ],
                           "additionalProperties": false
-                        },
-                        "minItems": 1,
-                        "maxItems": 15
+                        }
                       }
                     },
                     "required": [
@@ -2484,13 +2500,17 @@
                     "properties": {
                       "or": {
                         "type": "object",
+                        "propertyNames": {
+                          "type": "string"
+                        },
                         "additionalProperties": {
+                          "minItems": 1,
+                          "maxItems": 200,
                           "type": "array",
                           "items": {
-                            "$ref": "#/properties/fields/properties/targetingCriteria/properties/include/properties/and/items/properties/or/additionalProperties/items"
-                          },
-                          "minItems": 1,
-                          "maxItems": 200
+                            "type": "string",
+                            "pattern": "^urn:li:[A-Za-z]+:[A-Za-z0-9_-]+$"
+                          }
                         }
                       }
                     },
@@ -2507,24 +2527,25 @@
                 "description": "Native LinkedIn targeting criteria with facet keys and entity URNs, such as { include: { and: [ { or: { \"urn:li:adTargetingFacet:locations\": [\"urn:li:geo:105015875\"] } } ] } }. Use linkedin_find_targeting first."
               },
               "textAd": {
+                "description": "Partial text-ad content edit. Other existing text fields are preserved. Not applicable to sponsored posts.",
                 "type": "object",
                 "properties": {
                   "headline": {
+                    "description": "Text ad headline, up to 25 characters.",
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 25,
-                    "description": "Text ad headline, up to 25 characters."
+                    "maxLength": 25
                   },
                   "description": {
+                    "description": "Text ad body, up to 75 characters.",
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 75,
-                    "description": "Text ad body, up to 75 characters."
+                    "maxLength": 75
                   },
                   "landingPage": {
                     "type": "string",
-                    "format": "uri",
                     "maxLength": 2000,
+                    "format": "uri",
                     "description": "HTTPS click destination; separate from the image/video download URL."
                   },
                   "image": {
@@ -2533,17 +2554,16 @@
                     "description": "Exact image URN already uploaded into the selected account library."
                   }
                 },
-                "additionalProperties": false,
-                "description": "Partial text-ad content edit. Other existing text fields are preserved. Not applicable to sponsored posts."
+                "additionalProperties": false
               }
             },
             "additionalProperties": false,
             "description": "Only these supplied fields are changed. Nested values replace the corresponding native object."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2552,7 +2572,6 @@
           "entityId",
           "fields"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2563,7 +2582,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2588,8 +2607,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2625,9 +2644,9 @@
             "description": "Name stored in LinkedIn; does not rename source files or organic posts."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2635,7 +2654,6 @@
           "campaignGroupId",
           "name"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2646,7 +2664,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2671,8 +2689,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2708,9 +2726,9 @@
             "description": "Name stored in LinkedIn; does not rename source files or organic posts."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2718,7 +2736,6 @@
           "campaignId",
           "name"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2729,7 +2746,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2754,8 +2771,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2791,9 +2808,9 @@
             "description": "Name stored in LinkedIn; does not rename source files or organic posts."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2801,7 +2818,6 @@
           "adId",
           "name"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2812,7 +2828,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2837,8 +2853,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2869,16 +2885,15 @@
             "description": "Name stored in LinkedIn; does not rename source files or organic posts."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
           "adAccountId",
           "name"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2889,7 +2904,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -2914,8 +2929,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -2956,9 +2971,9 @@
             "description": "Name stored in LinkedIn; does not rename source files or organic posts."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -2967,7 +2982,6 @@
           "campaignId",
           "name"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -2978,7 +2992,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -3003,8 +3017,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -3034,16 +3048,15 @@
             "description": "Numeric ad ID or urn:li:sponsoredCreative ID in the selected account."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
           "adAccountId",
           "creativeId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -3054,7 +3067,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -3079,8 +3092,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -3125,9 +3138,9 @@
             "description": "Exact binary file size in bytes; images up to 8 MiB, videos up to 200 MiB."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -3136,7 +3149,6 @@
           "name",
           "fileSizeBytes"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -3147,7 +3159,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -3172,8 +3184,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -3205,6 +3217,7 @@
           "partIndex": {
             "type": "integer",
             "minimum": 0,
+            "maximum": 9007199254740991,
             "description": "Zero-based part index returned during upload initialization."
           },
           "bytesBase64": {
@@ -3213,9 +3226,9 @@
             "description": "Base64 encoding of the exact required part bytes, up to 8 MiB decoded."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -3224,7 +3237,6 @@
           "partIndex",
           "bytesBase64"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -3235,7 +3247,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -3260,8 +3272,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -3291,19 +3303,19 @@
             "description": "Signed initialization receipt returned by linkedin_initialize_upload; preserve it exactly."
           },
           "partReceipts": {
+            "minItems": 1,
+            "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string",
               "maxLength": 3000
             },
-            "minItems": 1,
-            "maxItems": 100,
             "description": "Signed receipts returned by linkedin_upload_part, one for every video part."
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
@@ -3311,7 +3323,6 @@
           "receipt",
           "partReceipts"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -3322,7 +3333,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -3347,8 +3358,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,
@@ -3384,24 +3395,23 @@
             "description": "Name stored in LinkedIn; does not rename source files or organic posts."
           },
           "mediaLibraryStatus": {
+            "description": "Archive or restore the library listing; does not replace binary content or alter ad status.",
             "type": "string",
             "enum": [
               "ACTIVE",
               "ARCHIVED"
-            ],
-            "description": "Archive or restore the library listing; does not replace binary content or alter ad status."
+            ]
           },
           "confirm": {
-            "type": "boolean",
+            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.",
             "default": false,
-            "description": "Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it."
+            "type": "boolean"
           }
         },
         "required": [
           "adAccountId",
           "mediaId"
         ],
-        "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "outputSchema": {
@@ -3412,7 +3422,7 @@
               {
                 "type": "object",
                 "properties": {},
-                "additionalProperties": true
+                "additionalProperties": {}
               },
               {
                 "type": "array",
@@ -3437,8 +3447,8 @@
         "required": [
           "result"
         ],
-        "additionalProperties": false,
-        "$schema": "http://json-schema.org/draft-07/schema#"
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
       },
       "annotations": {
         "readOnlyHint": false,

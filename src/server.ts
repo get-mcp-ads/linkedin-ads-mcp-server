@@ -9,7 +9,7 @@ import { logger } from "./core/logger.js";
 import { createContext, registerLinkedIn } from "./platforms/linkedin/index.js";
 import { collectorFor } from "./tool-quality.js";
 
-export const PACKAGE_VERSION = "1.0.0";
+export const PACKAGE_VERSION = "1.0.1";
 
 export function createServer(input: LinkedInConfigInput): McpServer {
   const config = validateConfig(input);

@@ -38,10 +38,10 @@ const targeting = z
   .object({
     include: z
       .object({
-        and: z.array(z.object({ or: z.record(z.array(urnValue).min(1).max(200)) }).strict()).min(1).max(15),
+        and: z.array(z.object({ or: z.record(z.string(), z.array(urnValue).min(1).max(200)) }).strict()).min(1).max(15),
       })
       .strict(),
-    exclude: z.object({ or: z.record(z.array(urnValue).min(1).max(200)) }).strict().optional(),
+    exclude: z.object({ or: z.record(z.string(), z.array(urnValue).min(1).max(200)) }).strict().optional(),
   })
   .strict()
   .describe(

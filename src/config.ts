@@ -26,9 +26,9 @@ const schema = z
     clientSecret: z.string().min(1).optional(),
     allowedAccountIds: z.array(z.string().regex(/^\d{1,20}$/)).min(1).max(MAX_ALLOWED_ACCOUNTS),
     scopes: z.array(z.string().regex(/^[A-Za-z_]+$/)).optional(),
-    enableWrites: z.boolean().default(false),
-    apiVersion: z.string().regex(/^\d{6}$/).default(LINKEDIN_DEFAULT_VERSION),
-    logLevel: z.enum(["debug", "info", "warn", "error"]).default("info"),
+    enableWrites: z.boolean().prefault(false),
+    apiVersion: z.string().regex(/^\d{6}$/).prefault(LINKEDIN_DEFAULT_VERSION),
+    logLevel: z.enum(["debug", "info", "warn", "error"]).prefault("info"),
   })
   .strict();
 
