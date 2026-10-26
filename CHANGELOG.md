@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 - 2026-10-26 - Zod 4 security update
+- Update `zod` to 4.6.7. Every Zod release before 4.6.6 is covered by the high-severity advisory GHSA-mrhx-c7xc-m3w5: validating an oversized constrained collection can exhaust memory, and no Zod 3 release carries the fix. `npm audit --omit=dev` reports no vulnerability again.
+- Keep the Zod 3 validation behaviour. A parameter default is still validated and completed before use, so an omitted object must still supply its required fields.
+- Tool names, parameters and descriptions published over MCP are unchanged. `server-card.json` is regenerated with Zod 4's JSON Schema output, which spells some constraints differently.
+
 ## 1.0.0 - 2026-10-23 - First standalone release
 - First standalone release, ported from the native LinkedIn Ads tools of the getmcpads gateway at revision `3e1c2c8`.
 - 18 read tools: account discovery and health check, account details, campaign groups, campaigns, creatives, single entities, setup requirements, analytics and statistics reports, professional demographics, revenue attribution, offline query validation, delivery status, targeting lookup, the media library and the media used by ads.

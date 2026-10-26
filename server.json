@@ -3,7 +3,7 @@
   "name": "com.getmcpads/linkedin-ads",
   "title": "LinkedIn Ads",
   "description": "LinkedIn Ads MCP server: 18 read tools, 15 opt-in preview-first writes.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "websiteUrl": "https://www.getmcpads.com/tools/linkedin-ads",
   "repository": {
     "url": "https://github.com/get-mcp-ads/linkedin-ads-mcp-server",
@@ -14,7 +14,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@getmcpads/linkedin-ads-mcp-server",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "transport": {
         "type": "stdio"
       },

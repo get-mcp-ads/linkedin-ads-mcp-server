@@ -67,7 +67,7 @@ export function registerLinkedInAccountTools(c: Collector, ctx: LinkedInContext)
       facet: z
         .string()
         .regex(/^urn:li:adTargetingFacet:[A-Za-z]+$/)
-        .default("urn:li:adTargetingFacet:locations")
+        .prefault("urn:li:adTargetingFacet:locations")
         .describe("Native targeting facet URN; defaults to location targeting."),
     },
     async (a, { client }) => client.targetingEntities({ finder: "typeahead", query: a.query, facet: a.facet }),
@@ -81,8 +81,8 @@ export function registerLinkedInAccountTools(c: Collector, ctx: LinkedInContext)
     "List account image/video library files with download URLs and native processing status; not ad performance.",
     {
       kind: z.enum(["images", "videos"]).describe("Library to list: images or videos."),
-      start: z.number().int().min(0).max(10_000).default(0).describe("Zero-based offset in the media library page."),
-      limit: z.number().int().min(1).max(100).default(30).describe("Maximum results in this page; inspect paging/coverage for additional data."),
+      start: z.number().int().min(0).max(10_000).prefault(0).describe("Zero-based offset in the media library page."),
+      limit: z.number().int().min(1).max(100).prefault(30).describe("Maximum results in this page; inspect paging/coverage for additional data."),
     },
     async (a, { api }) => {
       const page = await libraryPage(api, a.adAccountId, a.kind, a.start, a.limit);
@@ -118,7 +118,7 @@ export function registerLinkedInAccountTools(c: Collector, ctx: LinkedInContext)
     "List the images and playable videos used by the ads of an account, with the actual ad names. Separates " +
       "landing URLs from media URLs. Does not report delivery.",
     {
-      limit: z.number().int().min(1).max(50).default(20).describe("Maximum ads scanned in this page; inspect coverage for additional data."),
+      limit: z.number().int().min(1).max(50).prefault(20).describe("Maximum ads scanned in this page; inspect coverage for additional data."),
       pageToken: z.string().max(2000).optional().describe("Opaque nextPageToken from the preceding response; omit for the first page."),
       adIds: z
         .array(z.string().regex(/^(\d+|urn:li:sponsoredCreative:\d+)$/))

@@ -69,7 +69,7 @@ export const accountIdSchema = z
 
 export const confirmSchema = z
   .boolean()
-  .default(false)
+  .prefault(false)
   .describe("Preview unless true. Apply only after the person explicitly approved this exact change, in an account where their LinkedIn role allows it.");
 
 /** Refuses an account outside LINKEDIN_ADS_ACCOUNT_IDS before any request is made. */
