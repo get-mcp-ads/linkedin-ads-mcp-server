@@ -1,0 +1,17 @@
+linkedin-ads-mcp-server
+Copyright 2026 GetMCPAds
+
+This product includes software developed at GetMCPAds (https://www.getmcpads.com).
+
+An open-source Model Context Protocol server for the LinkedIn Marketing API.
+It is self-hosted and unaffiliated with LinkedIn.
+
+GetMCPAds also runs a managed gateway that covers LinkedIn Ads alongside
+Meta Ads, Google Ads, TikTok Ads, Pinterest Ads, X Ads, Google Analytics and
+Search Console, with hosted OAuth and cross-platform reporting:
+https://www.getmcpads.com
+
+---
+
+LinkedIn is a trademark of LinkedIn Corporation. This project is not
+affiliated with, endorsed by, or sponsored by LinkedIn Corporation.
